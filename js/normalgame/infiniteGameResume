@@ -1,0 +1,200 @@
+let altura = 1080;
+let ancho = 1920;
+let score 
+let puntuacion;
+let puntaucionTotal=0;
+let totalScore
+
+class GameScene extends Phaser.Scene {
+    constructor (){
+        super('GameScene');
+		this.cards = null;
+		this.firstClick = null;
+
+        totalScore = 0;
+		this.correct = 0;
+		this.player = "";
+    }
+
+
+
+    preload (){	
+
+        this.load.image('back', '../resources/0.png');
+		this.load.image('cb', '../resources/1.png');
+		this.load.image('co', '../resources/2.png');
+		this.load.image('sb', '../resources/3.png');
+		this.load.image('so', '../resources/4.png');
+		this.load.image('tb', '../resources/5.png');
+		this.load.image('to', '../resources/6.png');
+	}
+	
+    create (){	
+       
+        var savegame = JSON.parse(sessionStorage.getItem('saved'));
+
+		sessionStorage.setItem("gameType", "normal");
+		var username = savegame.m_name;
+		
+        puntaucionTotal = this.add.text (ancho/2-175, 200, totalScore,  {fill: '#0f0' });
+		this.cameras.main.setBackgroundColor(0x176174);
+		let deck_total = ['co', 'co', 'cb', 'cb', 'sb', 'sb', 'so', 'so', 'tb', 'tb', 'to', 'to'];
+		
+		var json = sessionStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
+		var options_data = JSON.parse(json);
+		var diff = options_data.dificulty;
+
+        var couples = savegame.m_couples;
+
+		//var couples = options_data.cards;
+		var deck_joc = deck_total.slice(0, couples*2);
+		
+		var deduct = null;
+		var timeToFlip = null;
+
+		score = save.m_score
+        totalScore = save.m_totalScore
+		puntuacion = this.add.text (ancho/2-175, 100, score,  {fill: '#0f0' });
+
+		if (diff == "easy"){
+			deduct = 5;
+			timeToFlip = 2000;
+		}
+		else if (diff == "normal"){
+			deduct = 10
+			timeToFlip = 750;
+		}
+		else if (diff == "hard"){
+			deduct = 20;
+			timeToFlip = 200;
+		}
+
+		//Barreja de les cartes per a que no surtin les parelles una al costat de l'altre
+		deck_joc.sort((a,b) => 0.5 - Math.random())
+
+		//Distribucio per columnes i files
+		if (couples < 5){
+			var columnes = 2*couples;
+			var files = 1;
+			var diferenciaCol = (1920-columnes*195+98)/2
+			var diferenciaFil = (1080-319)/2
+		}
+		else{
+			var columnes = couples
+			var files = 2
+			var diferenciaCol = (1920-columnes*195+98)/2
+			var diferenciaFil = (1080-319)/2
+		}
+
+
+
+		var m = 0;
+		for (let n = 0; n < columnes; n++){
+			for(let k = 0; k < files; k++){
+				this.newCard = this.add.image(n*150+diferenciaCol, k*200 + diferenciaFil,deck_joc[m]);
+				this.newCard.setScale(0.5);
+				
+				m += 1;
+			}
+		}
+
+		this.cards = this.physics.add.staticGroup();
+
+		for (let p = 0; p < columnes; p++){
+			for(let q = 0; q < files; q++){
+				this.cards.create(p*150+diferenciaCol, q*200 + diferenciaFil , 'back').setScale(0.5);
+			}	
+		}
+		
+		let i = 0;
+		this.cards.children.iterate((card)=>{
+			card.card_id = deck_joc[i];
+			i++;
+			card.setInteractive();
+			card.on('pointerup', () => {
+				card.disableBody(true,true);
+				if (this.firstClick){
+					if (this.firstClick.card_id !== card.card_id){
+						score -= deduct;
+						//alert(score);
+						puntuacion.setText(score);
+						
+
+						this.firstClick.enableBody(false, 0, 0, true, true);
+						card.enableBody(false, 0, 0, true, true);
+
+						var fallo = [];
+						let m = 0;
+
+
+							for (let iterator = 0; iterator < columnes; iterator++){
+								for (let j = 0; j < files; j++){
+									var fail = this.add.image(iterator*150+diferenciaCol, j*200 + diferenciaFil, deck_joc[m]).setScale(0.5);
+									fallo.push(fail);
+									m++;
+								}
+							}
+						
+						
+						setTimeout(() =>{
+							for (let iterador = 0; iterador < couples*2; iterador++){
+								fallo[iterador].destroy();
+							}
+						},timeToFlip);
+						
+						
+						if (score <= 0){
+							var aux_taula = JSON.parse(sessionStorage.getItem('newtop'))
+							var resultat = [username, totalScore];
+							aux_taula.push(resultat);
+							sessionStorage.setItem("newtop", JSON.stringify(aux_taula));
+
+							alert(aux_taula, username, totalScore);
+
+					
+
+                            puntuacion.setText("GAME OVER");
+                            options_data.cards = 2;
+							options_data.dificulty = "easy";
+							options_data.puntsPerd = 10;	
+							sessionStorage.setItem("config", JSON.stringify(options_data));
+                            this.cards.clear(true,true);
+
+							
+							
+
+                        }
+
+					}
+					else{
+						this.correct++;
+						if (this.correct >= couples){
+							puntuacion.setText(score);
+                            totalScore += score;
+                            this.correct = 0;
+                            puntaucionTotal.setText(this.totalScore);
+
+                            if(couples<6) {
+                                couples+=1;
+                            }
+                            options_data.cards = couples;
+                            options_data.dificulty = diff;
+							options_data.puntsPerd = deduct;
+                            sessionStorage.setItem("config", JSON.stringify(options_data));
+
+
+							this.scene.restart();
+
+							//loadpage("../");
+						}
+					}
+					this.firstClick = null;
+				}
+				else{
+					this.firstClick = card;
+				}
+			}, card);
+		});
+	}
+	
+}

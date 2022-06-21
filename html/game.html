@@ -1,0 +1,48 @@
+
+	
+
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+	<script src="../js/game_controller.js"></script>
+	<script src="../js/game_info.js"></script>
+
+	<script>let username = sessionStorage.getItem("name");
+			let scorepoints = sessionStorage.getItem("score");
+			let guanyat = sessionStorage.getItem("guanyat");
+			let typeOfGame = sessionStorage.getItem("gameType");
+	</script>
+
+<!DOCTYPE html> 
+<html>
+	<head>
+		<link rel="stylesheet" href="../styles/index.css">
+		<script src="../js/loader.js"></script>
+		<title> JOC INDIVIDUAL </title>
+	</head>
+	<body>
+		<div id="game_id">
+			<p class="menu-object" id="nom">Jugant {{name}}</p>
+			<p class="menu-object" id="resultat" > Has PERDUT :( </p>
+			<div v-else>
+				<img v-for="(card, indx) in current_card" :src="card.texture" v-on:click="clickCard(indx)">
+				<button class="menu-object" id="saveGame" v-on:click="save">Guardar puntuacio</button>
+			</div>
+		</div>
+		<button class="menu-object" onclick="goToMenu();">Anar al Menu</button>
+	</body>
+
+<script>	
+document.getElementById("nom").innerHTML = username;
+if(guanyat=="si"){
+	document.getElementById("resultat").innerHTML = ("Has GUANYAT!!! amb " + scorepoints + " punts");
+}
+else{
+	document.getElementById("resultat").innerHTML = ("Has perdut :(");
+}
+
+if(typeOfGame!="infinite"){
+	document.getElementById("saveGame").style.display="none";
+}
+
+</script>
+
+</html>

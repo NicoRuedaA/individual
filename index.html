@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html>
+
+    <script>		var asdtop = JSON.parse(sessionStorage.getItem('newtop'))</script>
+	<head>
+		<link rel="stylesheet" href="./styles/index.css">
+        <script src="./js/loader.js"></script>
+		<script src="./js/index.js"></script>
+        <script src="./js/game_info.js"></script>
+
+		<title> Twisted Fate </title>
+        
+            
+        
+	</head>
+	<body>
+        <div>
+            <h1>
+                Twisted Fate
+            </h1>
+        </div>
+        <div class="esquerra">
+        </div>
+        <div class="dreta">
+        </div>
+        <div class="menu">
+            <img src="./resources/logo.png" class ="logo" style="width:150px;height:150x;">
+            <button class="menu-object" onclick="new_game1()"> 
+                <p>Normal Game</p>
+            </button>
+            <button class="menu-object" onclick="new_game2()"> 
+                <p>Infinite Game</p>
+            </button>
+            <button class="menu-object" onclick="options()"> 
+                <p>Opcions</p>
+            </button>
+            <button class="menu-object" onclick="highscore();"> 
+                <p>Puntuacions</p>
+            </button>
+            <button class="menu-object" onclick="goToGameAndLoad()"> 
+                <p>Carregar</p>
+            </button>
+            <button class="menu-object" onclick="exit()"> 
+                <p>Sortir</p>
+            </button>
+            
+        </div>
+        
+	</body>
+</html>

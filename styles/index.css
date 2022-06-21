@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+
+
+*, html {
+    margin:0;
+    padding:0;  
+    font-family: 'Yusei Magic';
+}
+
+body{
+    background-color:  rgb(23, 97, 116);
+}
+
+#title{
+    text-align: center;
+	margin-top: 50px;
+    margin-bottom: 50px;
+	font-size: 35px;
+    height: 60px;
+	line-height: 60px;
+    color: rgb(255, 255, 255);;
+    background-color: rgb(84,93,109);
+    
+
+}
+
+.button{
+    font-family: 'Yusei Magic';
+}
+
+
+.menu-object{
+    color: rgb(176, 184, 185);
+    display:block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+	height: 75px;
+	font-size: 20px;
+	margin-top: 30px;
+    background-color: rgb(134, 19, 19);
+    font-family: 'Courier New', monospace;
+}
+
+button.menu-object:active{
+	font-size: 18px;
+	width: 275px;
+	height: 70px;
+	background-color: rgb(16, 22, 34);
+}
+
+button.menu-object:hover:not(:active){
+	font-size: 22px;
+	width: 325px;
+	height: 85px;
+	background-color: rgb(35, 50, 77);
+}
+.menu{
+    height: 1000px;
+    width: 400px;
+    background-color: rgb(84,93,109);
+    border: 8px solid rgb(26, 188, 194);
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 70px;
+}
+
+.esquerra{
+    background-color: rgb(26, 188, 194);
+    float: left;
+    height: 1200px;
+    width: 300px;
+    margin-left: 0px;
+}
+
+.dreta{
+    background-color: rgb(26, 188, 194);
+    float: right;
+    height: 1200px;
+    width: 300px;
+}
+
+.peu{
+    margin-top: 100px;
+    background-color: rgb(24,34,53);
+    height: 1000px;
+}
+
+h1{
+    text-align: center;
+    background-color: rgb(134, 19, 19);
+    line-height: 100px;
+    color: rgb(255, 255, 255);
+    
+}
+
+#game_area{
+    width: 1800px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+}
+
+.logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    width: 600px;
+}
+
+#exit{
+    text-align: center;
+}

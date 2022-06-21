@@ -1,0 +1,40 @@
+<!DOCTYPE html> 
+<html>
+	
+	<script>
+		
+		var asdtop = JSON.parse(sessionStorage.getItem('newtop'))
+	</script>
+
+	<head>
+		<link rel="stylesheet" href="../styles/index.css">
+		<script src="../js/loader.js"></script>
+		<script src="../js/puntuacions.js"></script>
+		<script src="../js/game_info.js"></script>
+		
+		<title> JOC INDIVIDUAL - PUNTUACIONS </title>
+	</head>
+
+	<p id="p1">Sin registrar!</p>
+	<p id="p2">Sin registrar!</p>
+	<p id="p1">Sin registrar!</p>
+	<p id="p1">Sin registrar!</p>
+	<p id="p1">Sin registrar!</p>
+
+	<button class="menu-object" onclick="goToMenu()"> 
+		<p>Return</p>
+	</button>
+
+	<script>
+
+
+
+		document.getElementById("p1").innerHTML = asdtop[0][0] + (" ") + asdtop[0][1];
+		document.getElementById("p2").innerHTML = asdtop[1][0] + (" ") + asdtop[1][1];
+		document.getElementById("p2").innerHTML = asdtop[1][0] + (" ") + asdtop[2][1];
+		document.getElementById("p2").innerHTML = asdtop[1][0] + (" ") + asdtop[3][1];
+		document.getElementById("p2").innerHTML = asdtop[1][0] + (" ") + asdtop[4][1];
+		</script>
+
+</html>
+
